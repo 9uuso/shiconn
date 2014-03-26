@@ -17,13 +17,17 @@ func main() {
 			log.Println("Connection lost - shutting down the computer...")
 			if runtime.GOOS == "windows" {
 				cmd := exec.Command("shutdown", "-s")
+				err = cmd.Run()
+				if err != nil {
+					log.Fatal(err)
+				}
 			}
 			if runtime.GOOS == "darwin" || runtime.GOOS == "linux" {
 				cmd := exec.Command("sudo", "shutdown")
-			}
-			err = cmd.Run()
-			if err != nil {
-				log.Fatal(err)
+				err = cmd.Run()
+				if err != nil {
+					log.Fatal(err)
+				}
 			}
 		} else {
 			log.Println(time.Now(), "connection is working!")
